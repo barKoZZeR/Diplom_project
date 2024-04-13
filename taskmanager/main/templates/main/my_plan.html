@@ -1,0 +1,44 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+Мой план
+{% endblock %}
+
+{% block content %}
+<h1>Мои планы:</h1>
+{% if plans %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>№</th>
+                <th>Продукт</th>
+                <th>Количество</th>
+                <th>Дата создания</th>
+                <th>Крайний срок</th>
+                <th>Прогресс</th>
+                <th>Создал</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for plan in plans %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ plan.Product.ProductName }}</td>
+                <td>{{ plan.Quantity }}</td>
+                <td>{{ plan.created_at|date:"d.m.Y H:i" }}</td>
+                <td>{{ plan.Deadline }}</td>
+                <td>{{ plan.get_total_sales }}/{{ plan.Quantity }}</td>
+                <td>{{ plan.created_by.last_name }} {{ plan.created_by.first_name }} {{ plan.created_by.middle_name }}</td>
+                <td>
+                    <a href="{% url 'add_action' plan.id %}" class="btn btn-primary">Заполнить отчет</a>
+                    <a href="{% url 'view_plan' plan.id %}" class="btn btn-info">Просмотреть действия</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>Здесь пока ничего нет</p>
+{% endif %}
+{% endblock %}

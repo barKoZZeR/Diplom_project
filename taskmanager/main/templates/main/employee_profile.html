@@ -1,0 +1,77 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Профиль сотрудника{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Профиль сотрудника: {{ employee.last_name }} {{ employee.first_name }} {{ employee.middle_name }}</h1>
+    <p>Должность: {{ employee.role.RoleName }}</p>
+    <p>Email: {{ employee.email }}</p>
+    <p>Телефон: {{ employee.phone_number }}</p>
+    <p>Telegram: {{ employee.telegram }}</p>
+    <p>ВКонтакте: {{ employee.vk }}</p>
+    {% if request.user == employee and employee.role.RoleName != "Руководитель" %}
+        <h2>Планы:</h2>
+        {% if plans %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Продукт</th>
+                        <th>Количество</th>
+                        <th>Дата создания плана</th>
+                        <th>Крайний срок</th>
+                        <th>Прогресс выполнения</th>
+                        <th>Изменения</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for plan in plans %}
+                    <tr class="{% if plan.get_total_sales > plan.Quantity %}table-success{% endif %}">
+                        <td>{{ plan.Product.ProductName }}</td>
+                        <td>{{ plan.Quantity }}</td>
+                        <td>{{ plan.created_at|date:"d.m.Y H:i" }}</td>
+                        <td>{{ plan.Deadline }}</td>
+                        <td>{{ plan.get_total_sales }}/{{ plan.Quantity }}</td>
+                        <td><a href="{% url 'view_plan' plan.id %}">Посмотреть изменения</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>Планов пока нет.</p>
+        {% endif %}
+    {% elif request.user.role.RoleName == "Руководитель" and request.user != employee %}
+        <h2>Планы:</h2>
+        {% if plans %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Продукт</th>
+                        <th>Количество</th>
+                        <th>Дата создания плана</th>
+                        <th>Крайний срок</th>
+                        <th>Прогресс выполнения плана</th>
+                        <th>Создал</th>
+                        <th>Изменения</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for plan in plans %}
+                    <tr class="{% if plan.get_total_sales > plan.Quantity %}table-success{% endif %}">
+                        <td>{{ plan.Product.ProductName }}</td>
+                        <td>{{ plan.Quantity }}</td>
+                        <td>{{ plan.created_at|date:"d.m.Y H:i" }}</td>
+                        <td>{{ plan.Deadline }}</td>
+                        <td>{{ plan.get_total_sales }}/{{ plan.Quantity }}</td>
+                        <td>{{ plan.created_by.last_name }} {{ plan.created_by.first_name }} {{ plan.created_by.middle_name }}</td>
+                        <td><a href="{% url 'view_plan' plan.id %}">Посмотреть изменения</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>У этого сотрудника пока нет планов.</p>
+        {% endif %}
+    {% endif %}
+</div>
+{% endblock %}

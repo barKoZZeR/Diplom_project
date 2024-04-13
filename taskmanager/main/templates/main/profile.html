@@ -1,0 +1,20 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+Мой профиль
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Мой профиль</h2>
+    <p>ID: {{ user.id }}</p>
+    <p>Фамилия: {{ user.last_name }}</p>
+    <p>Имя: {{ user.first_name }}</p>
+    <p>Отчество: {{ user.middle_name }}</p>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+    </form>
+</div>
+{% endblock %}

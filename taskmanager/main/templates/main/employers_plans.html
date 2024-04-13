@@ -1,0 +1,21 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+Сотрудники
+{% endblock %}
+
+{% block content %}
+    <h1>Сотрудники</h1>
+    {% if managers %}
+        <ul>
+            {% for manager in managers %}
+                <li>
+                    <a href="{% url 'employee_profile' manager.id %}">{{ manager.last_name }} {{ manager.first_name }} {{ manager.middle_name }} - {{ manager.role.RoleName }}</a>
+                    <a href="{% url 'create_plan_for_employee' manager.id %}" class="btn btn-primary">Создать план</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Здесь пока никого нет</p>
+    {% endif %}
+{% endblock %}

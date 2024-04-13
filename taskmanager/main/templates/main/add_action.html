@@ -1,0 +1,22 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<h2>Внести действия в план:</h2>
+    <p>Продукт - {{ plan.Product.ProductName }}</p>
+    <p>Количество - {{ plan.Quantity }}</p>
+    <p>Крайний срок - {{ plan.Deadline|date:"d.m.Y" }}</p>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var inputDate = document.querySelector('input[type="date"]');
+            if (inputDate) {
+                inputDate.setAttribute('min', '{{ plan.created_at|date:"Y-m-d" }}');
+                inputDate.setAttribute('max', '{{ plan.Deadline|date:"Y-m-d" }}');
+            }
+        });
+    </script>
+    <button type="submit">Сохранить</button>
+</form>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+    <h1>Главная страница</h1>
+    {% if roles_with_users %}
+        {% for role in roles_with_users %}
+            <h2>{{ role.RoleName }}</h2>
+            <ul>
+                {% for user in role.user_set.all %}
+                    <li><a href="{% url 'employee_profile' user.id %}">{{ user.last_name }} {{ user.first_name }} {{ user.middle_name }}</a></li>
+                {% endfor %}
+            </ul>
+        {% endfor %}
+    {% endif %}
+    <h2>Объявления:</h2>
+    {% if tasks %}
+        {% for el in tasks %}
+            <div class="alert alert-warning mt-2">
+                <h3>{{ el.title }}</h3>
+                <p>{{ el.task }}</p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>Объявлений пока нет.</p>
+    {% endif %}
+{% endblock %}

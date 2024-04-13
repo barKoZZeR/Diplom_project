@@ -1,0 +1,54 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+План и действия
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Действия сотрудника:</h2>
+        <p>Продукт - {{ plan.Product.ProductName }}</p>
+        <p>Количество - {{ plan.Quantity }}</p>
+        <p>Крайний срок - {{ plan.Deadline|date:"d.m.Y" }}</p>
+    {% if actions %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Дата</th>
+                    <th>Продукт</th>
+                    <th>Количество продаж</th>
+                    <th>Комментарий</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for action in page_obj %}
+                <tr>
+                    <td>{{ action.date }}</td>
+                    <td>{{ plan.Product.ProductName }}</td>
+                    <td>{{ action.sales }}</td>
+                    <td>{{ action.comment }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="d-flex justify-content-between">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        {% for num in page_obj.paginator.page_range %}
+                            {% if page_obj.number == num %}
+                                <li class="page-item active"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                            {% else %}
+                                <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </nav>
+                <div>
+                    <span>Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.</span>
+                </div>
+        </div>
+    {% else %}
+        <p>Действий пока нет</p>
+    {% endif %}
+</div>
+{% endblock %}
