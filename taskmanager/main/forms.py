@@ -61,6 +61,14 @@ class PlanForm(ModelForm):
 
         return cleaned_data
 
+    def save(self, commit=True):
+        plan = super(PlanForm, self).save(commit=False)
+        if not plan.created_by and self.request:
+            plan.created_by = self.request.user
+        if commit:
+            plan.save()
+        return plan
+
 
 # Форма для создания
 class SaleForm(ModelForm):

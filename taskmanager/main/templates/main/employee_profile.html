@@ -8,8 +8,8 @@
     <p>Должность: {{ employee.role.RoleName }}</p>
     <p>Адрес электронной почты: {{ employee.email }}</p>
     <p>Номер телефон: {{ employee.phone_number }}</p>
-    <p>VK: {{ employee.telegram }}</p>
-    <p>Telegram: {{ employee.vk }}</p>
+    <p>VK: {{ employee.vk }}</p>
+    <p>Telegram: {{ employee.telegram }}</p>
     {% if request.user == employee and employee.role.RoleName != "Руководитель" %}
         <h2>Планы:</h2>
         {% if plans %}
@@ -26,7 +26,7 @@
                 </thead>
                 <tbody>
                     {% for plan in plans %}
-                    <tr class="{% if plan.get_total_sales > plan.Quantity %}table-success{% endif %}">
+                    <tr class="{% if plan.get_total_sales >= plan.Quantity %}table-success{% endif %}">
                         <td>{{ plan.Product.ProductName }}</td>
                         <td>{{ plan.Quantity }}</td>
                         <td>{{ plan.created_at|date:"d.m.Y H:i" }}</td>
@@ -57,7 +57,7 @@
                 </thead>
                 <tbody>
                     {% for plan in plans %}
-                    <tr class="{% if plan.get_total_sales > plan.Quantity %}table-success{% endif %}">
+                    <tr class="{% if plan.get_total_sales >= plan.Quantity %}table-success{% endif %}">
                         <td>{{ plan.Product.ProductName }}</td>
                         <td>{{ plan.Quantity }}</td>
                         <td>{{ plan.created_at|date:"d.m.Y H:i" }}</td>

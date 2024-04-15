@@ -142,6 +142,10 @@ class Plan(models.Model):
     def __str__(self):
         return f"План для {self.User.username} на продукт {self.Product.ProductName}"
 
+    class Meta:
+        verbose_name = 'План'
+        verbose_name_plural = 'Планы'
+
 
 # Модель для записи сотрудником продаж
 class Sale(models.Model):
@@ -157,7 +161,7 @@ class Sale(models.Model):
 # Действия сотрудника по заполнения плана
 class Action(models.Model):
     plan = models.ForeignKey(Plan, on_delete=models.CASCADE, related_name='actions')
-    date = models.DateField()
+    date = models.DateField(verbose_name='Дата заполнения очтета')
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="Продукт")
     sales = models.IntegerField(verbose_name="Количество продаж")
     comment = models.TextField(blank=True, null=True, verbose_name="Комментарий")

@@ -1,7 +1,10 @@
 {% extends 'main/base.html' %}
 
 {% block content %}
-<h2>Создать план для {{ employee.username }}</h2>
+<h2>Создать план для:</h2>
+<p>Фамилия: {{ employee.last_name }}</p>
+<p>Имя: {{ employee.first_name }}</p>
+<p>Отчество: {{ employee.middle_name }}</p>
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
