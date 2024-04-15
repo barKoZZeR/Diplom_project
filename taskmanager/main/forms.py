@@ -1,4 +1,4 @@
-from .models import Task, Sale, Plan, Action, Product, User
+from .models import Task, Sale, Plan, Action
 from django.forms import ModelForm, TextInput, Textarea, DateInput
 from django import forms
 from .models import User
