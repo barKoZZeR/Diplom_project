@@ -4,12 +4,12 @@
 
 {% block content %}
 <div class="container">
-    <h1>Профиль сотрудника: {{ employee.last_name }} {{ employee.first_name }} {{ employee.middle_name }}</h1>
+    <h1>Профиль: {{ employee.last_name }} {{ employee.first_name }} {{ employee.middle_name }}</h1>
     <p>Должность: {{ employee.role.RoleName }}</p>
-    <p>Email: {{ employee.email }}</p>
-    <p>Телефон: {{ employee.phone_number }}</p>
-    <p>Telegram: {{ employee.telegram }}</p>
-    <p>ВКонтакте: {{ employee.vk }}</p>
+    <p>Адрес электронной почты: {{ employee.email }}</p>
+    <p>Номер телефон: {{ employee.phone_number }}</p>
+    <p>VK: {{ employee.telegram }}</p>
+    <p>Telegram: {{ employee.vk }}</p>
     {% if request.user == employee and employee.role.RoleName != "Руководитель" %}
         <h2>Планы:</h2>
         {% if plans %}

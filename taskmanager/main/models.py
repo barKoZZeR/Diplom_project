@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.utils import timezone
 from django.conf import settings
+from django.db import IntegrityError
+from django.core.exceptions import ValidationError
 
 
 # Модель для создания пользователей
@@ -29,10 +31,20 @@ class MyUserManager(BaseUserManager):
 
 # Модель для хранения ролей
 class Role(models.Model):
-    RoleName = models.CharField(max_length=255, verbose_name="Название роли")
+    RoleName = models.CharField(max_length=255, unique=True, verbose_name="Название роли")
 
     def __str__(self):
         return self.RoleName
+
+    def save(self, *args, **kwargs):
+        try:
+            super(Role, self).save(*args, **kwargs)
+        except IntegrityError:
+            raise ValidationError('Роль с таким названием уже существует.')
+
+    class Meta:
+        verbose_name = 'Роль'
+        verbose_name_plural = 'Роли'
 
 
 # Модель для хранения данных пользователя
@@ -60,6 +72,10 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.username
+
+    class Meta:
+        verbose_name = 'Пользователь'
+        verbose_name_plural = 'Пользователи'
 
     # Определение статуса пользователя
     @property
@@ -95,10 +111,20 @@ class Task(models.Model):
 
 # Модель продукта, который будет использоваться для создания планов
 class Product(models.Model):
-    ProductName = models.CharField(max_length=255, verbose_name="Название продукта")
+    ProductName = models.CharField(max_length=255, unique=True, verbose_name="Название продукта")
 
     def __str__(self):
         return self.ProductName
+
+    def save(self, *args, **kwargs):
+        try:
+            super(Product, self).save(*args, **kwargs)
+        except IntegrityError:
+            raise ValidationError('Продукт с таким названием уже существует.')
+
+    class Meta:
+        verbose_name = 'Продукт'
+        verbose_name_plural = 'Продукты'
 
 
 # Модель для плана продаж

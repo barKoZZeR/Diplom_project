@@ -18,7 +18,7 @@
                     <a class="p-3 text-white" href="{% url 'profile' %}">{{ user.last_name }} {{ user.first_name }} {{ user.middle_name }}</a>
                 </span>
             {% endif %}
-            <a class="p-3 text-white" href="{% url 'home' %}">Главная</a>
+            <a class="p-3 text-white" href="{% url 'home' %}">Главная страница</a>
             {% if user.is_authenticated %}
                 {% if user.role.RoleName == "Руководитель" %}
                     <a class="p-3 text-white" href="{% url 'employers_plans' %}">Сотрудники</a>

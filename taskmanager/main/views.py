@@ -50,12 +50,6 @@ def create_plan_for_employee(request, user_id):
     return render(request, 'main/create_plan.html', {'form': form, 'employee': employee})
 
 
-# Отображение профиля текущего пользователя
-@login_required
-def current_user_profile(request):
-    return render(request, 'main/profile.html', {'user': request.user})
-
-
 # Главная страница. Если пользователь залогинился под Администратором - он переадресовывается в админ-панель
 @login_required
 def index(request):
