@@ -1,0 +1,10 @@
+Веб-приложение - http://barkozzer.pythonanywhere.com/
+
+Аккаунты
+Руководитель:
+Имя пользователя: supervisor
+Пароль: Voice12345
+
+Менеджер:
+Имя пользователя: manager
+Пароль: Voice123
